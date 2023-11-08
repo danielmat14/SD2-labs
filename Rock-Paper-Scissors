@@ -1,0 +1,52 @@
+import React, { useState } from 'react';
+
+const choices = ['rock', 'paper', 'scissors'];
+
+const App = () => {
+  const [playerChoice, setPlayerChoice] = useState('');
+  const [computerChoice, setComputerChoice] = useState('');
+  const [result, setResult] = useState('');
+
+  const handlePlayerChoice = (choice) => {
+    setPlayerChoice(choice);
+    const computerRandomChoice = choices[Math.floor(Math.random() * choices.length)];
+    setComputerChoice(computerRandomChoice);
+    determineWinner(choice, computerRandomChoice);
+  };
+
+  const determineWinner = (player, computer) => {
+    if (player === computer) {
+      setResult("It's a tie!");
+    } else if (
+      (player === 'rock' && computer === 'scissors') ||
+      (player === 'scissors' && computer === 'paper') ||
+      (player === 'paper' && computer === 'rock')
+    ) {
+      setResult('You win!');
+    } else {
+      setResult('You lose!');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Rock Paper Scissors</h1>
+      <div>
+        {choices.map((choice, index) => (
+          <button key={index} onClick={() => handlePlayerChoice(choice)}>
+            {choice}
+          </button>
+        ))}
+      </div>
+      {playerChoice && computerChoice && (
+        <div>
+          <p>You chose: {playerChoice}</p>
+          <p>Computer chose: {computerChoice}</p>
+          <h2>{result}</h2>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
